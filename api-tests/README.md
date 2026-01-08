@@ -11,9 +11,9 @@ This repository contains automated API tests for the Paylocity Benefits Dashboar
 
 ## How to run
 1. Import the collection:
-   - paylocity_api_tests.postman_collection.json
+   - Paylocity.postman_collection.json
 2. Import the environment:
-   - paylocity_env.postman_environment.json
+   - PaylocityEnvironment.postman_environment.json
 3. Select the environment in Postman
 4. Run the collection using the Collection Runner
 
