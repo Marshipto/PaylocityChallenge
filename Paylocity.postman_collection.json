@@ -1,0 +1,284 @@
+{
+	"info": {
+		"_postman_id": "5161fa44-9c6e-4509-9b00-557725b791d4",
+		"name": "Paylocity",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "10183350",
+		"_collection_link": "https://gold-moon-44074.postman.co/workspace/Postman-API-Fundamentals-Studen~8780932f-086f-4d97-8a76-9831d978111a/collection/10183350-5161fa44-9c6e-4509-9b00-557725b791d4?action=share&source=collection_link&creator=10183350"
+	},
+	"item": [
+		{
+			"name": "getEmployees",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response time is acceptable\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(1000);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Employees have required fields\", function () {\r",
+							"    let json = pm.response.json();\r",
+							"    json.forEach(emp => {\r",
+							"        pm.expect(emp).to.have.property(\"firstName\");\r",
+							"        pm.expect(emp).to.have.property(\"lastName\");\r",
+							"        pm.expect(emp).to.have.property(\"username\");\r",
+							"    });\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/Prod/api/Employees",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"Prod",
+						"api",
+						"Employees"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "addEmployee",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let json = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function ()  {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Employee ID was generated\", function () {\r",
+							"    pm.expect(json.id).to.not.be.null;\r",
+							"});\r",
+							"pm.environment.set(\"employeeId\", json.id);"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"firstName\": \"dummy first\",\r\n    \"lastName\": \"dummy last\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/Prod/api/Employees",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"Prod",
+						"api",
+						"Employees"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "updateEmployee",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Delete was successful\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": " {\r\n  \"id\": \"{{employeeId}}\",\r\n  \"firstName\": \"Juanito\",\r\n  \"lastName\": \"Perez\",\r\n  \"dependants\": 1\r\n }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/Prod/api/Employees",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"Prod",
+						"api",
+						"Employees"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "deleteEmployee",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Delete was successful\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/Prod/api/Employees/{{employeeId}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"Prod",
+						"api",
+						"Employees",
+						"{{employeeId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getDeletedUser",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {\r",
+							"    pm.response.to.have.status(404);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/Prod/api/Employees:{{employeeId}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"Prod",
+						"api",
+						"Employees:{{employeeId}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "basic",
+		"basic": [
+			{
+				"key": "password",
+				"value": "!>9QT0/dML{4",
+				"type": "string"
+			},
+			{
+				"key": "username",
+				"value": "TestUser863",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseURL",
+			"value": "",
+			"type": "default"
+		},
+		{
+			"key": "id",
+			"value": "",
+			"type": "default"
+		}
+	]
+}
