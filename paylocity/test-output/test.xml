@@ -1,0 +1,13 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="regression">
+
+
+
+   <test name = "exampletest1">
+      <classes>
+         <class name = "automation.mavenProject.Cj" />
+      </classes>
+   </test>
+
+</suite>
+
